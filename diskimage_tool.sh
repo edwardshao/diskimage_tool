@@ -6,8 +6,8 @@ function usage
 	echo "options:"
 	echo "     [split]: split a disk image to "$PART_IMG_PRE"1.img ... "$PART_IMG_PRE"n.img"
 	echo "              #$PROG split diskimage.img"
-	echo "     [merge]: merge partition image to disk image"
-	echo "              #$PROG merge diskimage.img part1.img part2.img"
+	echo "     [update]: update partition image to disk image"
+	echo "              #$PROG update diskimage.img part1.img part2.img"
 }
 
 #set -x
@@ -18,7 +18,7 @@ OP=$1
 IMG_NAME=$2
 PART_COUNTER=1
 
-if [ $ARGC -lt 1 ] || [ $OP != split -a $OP != merge ]; then
+if [ $ARGC -lt 1 ] || [ $OP != split -a $OP != update ]; then
 	usage
 	exit 
 fi
@@ -41,7 +41,7 @@ case $OP in
 			PART_COUNTER=$(( PART_COUNTER + 1 ))
 		done < <(parted -s $IMG_NAME  unit s print | grep primary)
 		;;
-	merge )
+	update )
 		argc_part_start=3
 		while IFS=" " read num start end size type filesystem flags
 		do
