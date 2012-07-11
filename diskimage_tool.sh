@@ -49,8 +49,8 @@ case $OP in
 			echo $part_img_name
 			start=${start%s}
 	
-			dd bs=512 if=$part_img_name of=$IMG_NAME seek=$start
-	
+			dd conv=notrunc bs=512 if=$part_img_name of=$IMG_NAME seek=$start
+
 			PART_COUNTER=$(( PART_COUNTER + 1 ))
 			argc_part_start=$(( argc_part_start + 1 ))
 		done < <(parted -s $IMG_NAME  unit s print | grep primary)
